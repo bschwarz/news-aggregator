@@ -189,7 +189,7 @@ APP.Main = (function() {
 
       // Set up the next bit of the animation if there is more to do.
       if (Math.abs(left) > 0.5)
-        setTimeout(animate, 4);
+        window.requestAnimationFrame(animate);
       else
         left = 0;
 
@@ -202,7 +202,9 @@ APP.Main = (function() {
     // every few milliseconds. That's going to keep
     // it all tight. Or maybe we're doing visual changes
     // and they should be in a requestAnimationFrame
-    setTimeout(animate, 4);
+
+
+    window.requestAnimationFrame(animate);
   }
 
   function hideStory(id) {
