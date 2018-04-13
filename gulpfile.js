@@ -31,12 +31,6 @@ gulp.task('csslint', function() {
     .pipe(csslint.formatter());
 });
 
-// just to run csslint, since CSS gets inlined in HTML, and copy over bootstrap
-// gulp.task('css', ['csslint'], function() {
-//   return gulp.src(['**/css/boot*.css', '!node_modules/', '!node_modules/**', '!dist/', '!dist/**'])
-//     .pipe(gulp.dest(DEST));
-// });
-
 gulp.task('html', ['csslint'], function() {
   return gulp.src(['index.html', '!dist/', '!dist/**', '!node_modules/', '!node_modules/**'])
     .pipe(inlinesrc())
