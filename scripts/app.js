@@ -188,11 +188,21 @@ APP.Main = (function() {
 
     var storyElements = document.querySelectorAll('.story');
 
-    // It does seem awfully broad to change all the
-    // colors every time!
+    // Read in dimensions for later 
     var height = main.offsetHeight;
     var scoreLocation = [];
-    for (var s = 0; s < storyElements.length; s++) {
+    var storyHeight = storyElements[0].getBoundingClientRect().height;
+    var storyTop = storyElements[0].getBoundingClientRect().top;
+
+    // We calculate the starting stories, and number of stories
+    // So that we only colorize/scale the visible stories
+    // The addition of 5 is just a fudge to make sure there
+    // is no discontinuity
+    var start = Math.max(0, Math.floor(-1*storyTop/storyHeight));
+    var numStories = Math.ceil(window.innerHeight/storyHeight)+5;
+
+    // First we loop to just get attributes (i.e. read)
+    for (var s = start; s < start+numStories; s++) {
 
       var story = storyElements[s];
       var score = story.querySelector('.story__score');
@@ -201,7 +211,8 @@ APP.Main = (function() {
       scoreLocation[s] = score.getBoundingClientRect().top;
     }
 
-    for (var s = 0; s < storyElements.length; s++) {
+    // Now we loop to set the attributes (i.e. write)
+    for (var s = start; s < start+numStories; s++) {
 
       var story = storyElements[s];
       var score = story.querySelector('.story__score');
