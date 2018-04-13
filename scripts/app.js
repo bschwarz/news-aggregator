@@ -169,7 +169,7 @@ APP.Main = (function() {
     storyDetails.classList.add('show');
     storyDetails.classList.remove('hide');
   }
-  
+
 
   function hideStory(id) {
     document.body.classList.remove('details-active');
@@ -192,31 +192,32 @@ APP.Main = (function() {
 
     // It does seem awfully broad to change all the
     // colors every time!
+    var height = main.offsetHeight;
+    var scoreLocation = [];
+    for (var s = 0; s < storyElements.length; s++) {
+
+      var story = storyElements[s];
+      var score = story.querySelector('.story__score');
+
+      // Base the scale on the y position of the score.
+      scoreLocation[s] = score.getBoundingClientRect().top;
+    }
+
     for (var s = 0; s < storyElements.length; s++) {
 
       var story = storyElements[s];
       var score = story.querySelector('.story__score');
       var title = story.querySelector('.story__title');
 
-      // Base the scale on the y position of the score.
-      var height = main.offsetHeight;
-      var mainPosition = main.getBoundingClientRect();
-      var scoreLocation = score.getBoundingClientRect().top -
-          document.body.getBoundingClientRect().top;
-      var scale = Math.min(1, 1 - (0.05 * ((scoreLocation - 170) / height)));
-      var opacity = Math.min(1, 1 - (0.5 * ((scoreLocation - 170) / height)));
-
-      score.style.width = (scale * 40) + 'px';
-      score.style.height = (scale * 40) + 'px';
-      score.style.lineHeight = (scale * 40) + 'px';
-
-      // Now figure out how wide it is and use that to saturate it.
-      scoreLocation = score.getBoundingClientRect();
-      var saturation = (100 * ((scoreLocation.width - 38) / 2));
-
+      var diff = ((scoreLocation[s] - 170) / height);
+      var scale = 1 - (0.05 * diff);
+      var opacity = 1 - (0.5 * diff);
+      var saturation = (100 * ((scale*40 - 38) / 2));
+      score.style.transform = 'scale(' + scale + ')';
       score.style.backgroundColor = 'hsl(42, ' + saturation + '%, 50%)';
       title.style.opacity = opacity;
     }
+
   }
 
   main.addEventListener('touchstart', function(evt) {
