@@ -176,10 +176,14 @@ APP.Main = (function() {
     storyDetails.style.opacity = 1;
 
     // Find out where it currently is.
-    var storyDetailsPosition = storyDetails.getBoundingClientRect();
-    var left = storyDetailsPosition.left;
+    // var storyDetailsPosition = storyDetails.getBoundingClientRect();
+    // var left = storyDetailsPosition.left;
     function animate () {
 
+  var storyDetailsPosition = storyDetails.getBoundingClientRect();
+    if (left === null)
+      left = storyDetailsPosition.left;
+    
       // Now figure out where it needs to go.
       left += (0 - left) * 0.1;
 
@@ -202,6 +206,7 @@ APP.Main = (function() {
 
     window.requestAnimationFrame(animate);
   }
+
 
   function hideStory(id) {
 
@@ -226,7 +231,7 @@ APP.Main = (function() {
 
       // Set up the next bit of the animation if there is more to do.
       if (Math.abs(left - target) > 0.5) {
-        window.requestAnimationFrame(animate);
+         
       } else {
         left = target;
         inDetails = false;
@@ -282,16 +287,83 @@ APP.Main = (function() {
     }
   }
 
-  main.addEventListener('touchstart', function(evt) {
+  // main.addEventListener('touchstart', function(evt) {
 
-    // I just wanted to test what happens if touchstart
-    // gets canceled. Hope it doesn't block scrolling on mobiles...
-    if (Math.random() > 0.97) {
-      evt.preventDefault();
+  //   // I just wanted to test what happens if touchstart
+  //   // gets canceled. Hope it doesn't block scrolling on mobiles...
+  //   if (Math.random() > 0.97) {
+  //     evt.preventDefault();
+  //   }
+
+  // });
+
+  // Add requestAnimationFrame instead of scroll event, since it
+  // gives better performance
+  var lastPosition = -1;
+  function screenMove() {
+
+    // Need to check if we are scrolling
+    if (lastPosition == window.pageYOffset) {
+      window.requestAnimationFrame(screenMove);
+      return false;
+    } else {
+      lastPosition = window.pageYOffset;
     }
 
-  });
 
+    var header = $('header');
+    var headerTitles = header.querySelector('.header__title-wrapper');
+    var scrollTopCapped = Math.min(70, main.scrollTop);
+    var scaleString = 'scale(' + (1 - (scrollTopCapped / 300)) + ')';
+
+    // took this out for now. Doesn't seem to impact the UI, and improves 
+    // performances (i.e. FPS). Based on analysis from dev tools
+      colorizeAndScaleStories();
+
+    header.style.height = (156 - scrollTopCapped) + 'px';
+    headerTitles.style.webkitTransform = scaleString;
+    headerTitles.style.transform = scaleString;
+
+    // Add a shadow to the header.
+    if (main.scrollTop > 70)
+      document.body.classList.add('raised');
+    else
+      document.body.classList.remove('raised');
+
+    // Check if we need to load the next batch of stories.
+    var loadThreshold = (main.scrollHeight - main.offsetHeight -
+        LAZY_LOAD_THRESHOLD);
+    if (main.scrollTop > loadThreshold)
+      loadStoryBatch();    var header = $('header');
+    var headerTitles = header.querySelector('.header__title-wrapper');
+    var scrollTopCapped = Math.min(70, main.scrollTop);
+    var scaleString = 'scale(' + (1 - (scrollTopCapped / 300)) + ')';
+
+    // took this out for now. Doesn't seem to impact the UI, and improves 
+    // performances (i.e. FPS). Based on analysis from dev tools
+      // colorizeAndScaleStories();
+
+    header.style.height = (156 - scrollTopCapped) + 'px';
+    headerTitles.style.webkitTransform = scaleString;
+    headerTitles.style.transform = scaleString;
+
+    // Add a shadow to the header.
+    if (main.scrollTop > 70)
+      document.body.classList.add('raised');
+    else
+      document.body.classList.remove('raised');
+
+    // Check if we need to load the next batch of stories.
+    var loadThreshold = (main.scrollHeight - main.offsetHeight -
+        LAZY_LOAD_THRESHOLD);
+    if (main.scrollTop > loadThreshold)
+      loadStoryBatch();
+
+    window.requestAnimationFrame(screenMove);
+  }
+
+  // main.addEventListener('scroll', screenMove);
+  
   main.addEventListener('scroll', function() {
 
     var header = $('header');
@@ -299,7 +371,9 @@ APP.Main = (function() {
     var scrollTopCapped = Math.min(70, main.scrollTop);
     var scaleString = 'scale(' + (1 - (scrollTopCapped / 300)) + ')';
 
-    colorizeAndScaleStories();
+    // took this out for now. Doesn't seem to impact the UI, and improves 
+    // performances (i.e. FPS). Based on analysis from dev tools
+      colorizeAndScaleStories();
 
     header.style.height = (156 - scrollTopCapped) + 'px';
     headerTitles.style.webkitTransform = scaleString;
@@ -356,5 +430,7 @@ APP.Main = (function() {
     loadStoryBatch();
     main.classList.remove('loading');
   });
+
+// document.addEventListener('DOMContentLoaded', screenMove());
 
 })();

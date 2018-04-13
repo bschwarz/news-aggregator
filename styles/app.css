@@ -239,12 +239,15 @@ main.loading {
 
   overflow: hidden;
   transition: opacity 0.3s ease-out;
-}
-
-.story-details * {
-  will-change: transform;
+    will-change: transform;
   transform: translateZ(0);
 }
+
+
+/*.story-details * {
+  will-change: transform;
+  transform: translateZ(0);
+}*/
 
 .story-details__content {
   -webkit-flex: 1;
