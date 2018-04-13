@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-* {
+html {
   box-sizing: border-box;
 }
 
@@ -96,16 +96,16 @@ body.details-active .story__title,
 body.details-active .story__by,
 body.details-active .story__score {
   transition: opacity 0.5s ease-out;
-  opacity: 0 !important;
+  opacity: 0;
 }
 
 body.details-active .story {
   background: linear-gradient(to bottom, #FFF 0%, #FFF 100%);
 }
 
-body.raised .header {
-  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.16),
-      0px 2px 5px 0px rgba(0, 0, 0, 0.23);
+.raised .header {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+      0 2px 5px 0 rgba(0, 0, 0, 0.23);
 }
 
 main {
@@ -119,7 +119,7 @@ main {
   z-index: 0;
 }
 
-main.loading {
+.loading {
   background: url(../images/loader.png) center center no-repeat;
   background-size: 24px 24px;
 
@@ -199,9 +199,9 @@ main.loading {
   line-height: 40px;
 
   box-shadow:
-      0px 2px 5px 0px rgba(0, 0, 0, 0.06),
-      0px 2px 5px 0px rgba(0, 0, 0, 0.08),
-      0px 2px 7px 0px rgba(0, 0, 0, 0.10);
+      0 2px 5px 0 rgba(0, 0, 0, 0.06),
+      0 2px 5px 0 rgba(0, 0, 0, 0.08),
+      0 2px 7px 0 rgba(0, 0, 0, 0.10);
 }
 
 .story-details {
@@ -238,17 +238,16 @@ main.loading {
       0px 2px 7px 0px rgba(0, 0, 0, 0.10);
 
   overflow: hidden;
-  /*transition: opacity 0.3s ease-out;*/
-  transition: 1.5s;
+  transition: 0.5s;
     will-change: transform;
   transform: translateZ(0);
 }
 
-.story-details.show {
+.show {
   transform: translateX(-100vw);
 }
 
-.story-details.hide {
+.hide {
   transform: translateX(0);
 }
 
@@ -274,12 +273,6 @@ main.loading {
 .story-details__title-link {
   color: #FFF;
   opacity: 0.6;
-}
-
-.story-details__url {
-  font-size: 14px;
-  color: rgba(255,255,255,0.6);
-  font-weight: 400;
 }
 
 .story-details__header {
