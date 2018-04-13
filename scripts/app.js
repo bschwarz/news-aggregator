@@ -71,23 +71,21 @@ APP.Main = (function() {
 
     // This seems odd. Surely we could just select the story
     // directly rather than looping through all of them.
-    var storyElements = document.querySelectorAll('.story');
+    // Can access the story directly by Id instead of looping to find it
 
-    for (var i = 0; i < storyElements.length; i++) {
+    // Can access the story directly by Id instead of looping to find it
+    var story = document.getElementById('s-' + key);
 
-      if (storyElements[i].getAttribute('id') === 's-' + key) {
+    if (story !== null) {
+      details.time *= 1000;
+      var html = storyTemplate(details);
+      story.innerHTML = html;
+      story.addEventListener('click', onStoryClick.bind(this, details));
+      story.classList.add('clickable');
 
-        details.time *= 1000;
-        var story = storyElements[i];
-        var html = storyTemplate(details);
-        story.innerHTML = html;
-        story.addEventListener('click', onStoryClick.bind(this, details));
-        story.classList.add('clickable');
+      // Tick down. When zero we can batch in the next load.
+      storyLoadCount--;
 
-        // Tick down. When zero we can batch in the next load.
-        storyLoadCount--;
-
-      }
     }
 
     // Colorize on complete.
