@@ -40,7 +40,7 @@ You can load the website in two ways:
 
 ### Page Speed Insights Results:
 
-[index.html Page Speed Insight analysis](https://developers.google.com/speed/pagespeed/insights/?url=https%3A%2F%2Fbschwarz.github.io%2Fnews-aggregator%2Fdist%2F&tab=mobile) 
+[Page Speed Insight analysis](https://developers.google.com/speed/pagespeed/insights/?url=https%3A%2F%2Fbschwarz.github.io%2Fnews-aggregator%2Fdist%2F&tab=mobile) 
 
 ### Chrome DevTools Audit (Lighthouse)
 Received a performance score of 89 (good)
