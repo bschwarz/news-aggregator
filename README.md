@@ -46,7 +46,7 @@ You can load the website in two ways:
 Received a performance score of 89 (good)
 
 ### General Observations
-From Chrome DevTools Performance tab, you can visually see a huge difference between the old and new for both page loading, scrolling and story detail animation. 
+From Chrome DevTools Performance tab, you can visually see a huge difference between the old and new for both page loading, scrolling and story detail animation. FPS generally average almost double improvement.
 
 <table>
 	 <caption align="center"><b>Optimization Summary<b></caption>
