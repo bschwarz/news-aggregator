@@ -80,9 +80,9 @@ Received a performance score of 89 (good)
   </tr>
   <tr>
     <td>65</td>
-    <td>74</td>
+    <td>78</td>
     <td>85</td>
-    <td>86</td>
+    <td>88</td>
     <td>62</td>
     <td>89</td>
   </tr>
