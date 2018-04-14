@@ -124,7 +124,7 @@ APP.Main = (function() {
     if (typeof kids === 'undefined')
       return;
 
-    for (var k = 0; k < kids.length; k++) {
+    for (var k = 0, len=kids.length; k < len; k++) {
 
       comment = document.createElement('aside');
       comment.setAttribute('id', 'sdc-' + kids[k]);
@@ -202,26 +202,27 @@ APP.Main = (function() {
     var numStories = Math.ceil(window.innerHeight/storyHeight)+5;
 
     // First we loop to just get attributes (i.e. read)
-    for (var s = start; s < start+numStories; s++) {
+    var end = start+numStories;
+    for (var s = start, story, score; s < end; s++) {
 
-      var story = storyElements[s];
-      var score = story.querySelector('.story__score');
+      story = storyElements[s];
+      score = story.querySelector('.story__score');
 
       // Base the scale on the y position of the score.
       scoreLocation[s] = score.getBoundingClientRect().top;
     }
 
     // Now we loop to set the attributes (i.e. write)
-    for (var s = start; s < start+numStories; s++) {
+    for (var s = start,story,score,title,diff,scale,opacity,saturation; s < end; s++) {
 
-      var story = storyElements[s];
-      var score = story.querySelector('.story__score');
-      var title = story.querySelector('.story__title');
+      story = storyElements[s];
+      score = story.querySelector('.story__score');
+      title = story.querySelector('.story__title');
 
-      var diff = ((scoreLocation[s] - 170) / height);
-      var scale = 1 - (0.05 * diff);
-      var opacity = 1 - (0.5 * diff);
-      var saturation = (100 * ((scale*40 - 38) / 2));
+      diff = ((scoreLocation[s] - 170) / height);
+      scale = 1 - (0.05 * diff);
+      opacity = 1 - (0.5 * diff);
+      saturation = (100 * ((scale*40 - 38) / 2));
       score.style.transform = 'scale(' + scale + ')';
       score.style.backgroundColor = 'hsl(42, ' + saturation + '%, 50%)';
       title.style.opacity = opacity;
@@ -273,13 +274,13 @@ APP.Main = (function() {
     storyLoadCount = count;
 
     var end = storyStart + count;
-    for (var i = storyStart; i < end; i++) {
+    for (var i = storyStart,key,story; i < end; i++) {
 
       if (i >= stories.length)
         return;
 
-      var key = String(stories[i]);
-      var story = document.createElement('div');
+      key = String(stories[i]);
+      story = document.createElement('div');
       story.setAttribute('id', 's-' + key);
       story.classList.add('story');
       story.innerHTML = storyTemplate({
