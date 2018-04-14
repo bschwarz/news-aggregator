@@ -36,41 +36,26 @@ You can load the website in two ways:
 -   Minified CSS with ```htmlmin``` to reduce file size
 -   Minified JS with ```uglify-js``` to reduce file size
 -   Inlined CSS to avoid another round trip with ```inline-source```
--   Inlined javascript files ```namespace.js``` and ```data.js``` to avoid another round trip with ```inline-source```
+-   Inlined javascript files ```namespace.js```, ```app.js``` and ```data.js``` to avoid another round trip with ```inline-source```
 
 ### Page Speed Insights Results:
 
 [index.html Page Speed Insight analysis](https://developers.google.com/speed/pagespeed/insights/?url=https%3A%2F%2Fbschwarz.github.io%2Fnews-aggregator%2Fdist%2F&tab=mobile) 
 
-### Chrome DevTools Audit
+### Chrome DevTools Audit (Lighthouse)
 Received a performance score of 89 (good)
 
-<table>
-	 <caption align="center"><b>Optimization Summary<b></caption>
-  <tr>
-    <th>PageSpeed Mobile</th>
-    <th>PageSpeed Desktop</th>
-    <th>New Chrome Audit Performance</th>
-    <th>Old Chrome Audit Performance</th>
-  </tr>
-  <tr>
-    <td>74</td>
-    <td>86</td>
-    <td>89</td>
-    <td>62</td>
-  </tr>
-</table>
+### General Observations
+From Chrome DevTools Performance tab, you can visually see a huge difference between the old and new for both page loading, scrolling and story detail animation. 
 
 <table>
 	 <caption align="center"><b>Optimization Summary<b></caption>
   <tr>
-    <th>Page</th>
     <th colspan="2">Page Speed Mobile</th>
     <th colspan="2">Page Speed Desktop</th>
     <th colspan="2">Chrome Perf Audit</th>
   </tr>
   <tr>
-    <td></td>
     <td>Original</td>
     <td>Optimized</td>
     <td>Original</td>
