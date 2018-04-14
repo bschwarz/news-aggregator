@@ -25,12 +25,12 @@ You can load the website in two ways:
 
 ## Optimizations
 ### Page Rendering and Painting
--	A story details widget was created for each story when clicked. So, I changed that so that there was only one widget, which got updated with the active story when clicked. This reduced the number of DOM elements significantly, and excess layers.
+-	The original app created a story details widget for each story when clicked. So, I changed that so that there was only one widget, which got updated with the active story when clicked. This reduced the number of DOM elements significantly, and excess layers.
 -	Layers (via ```will-change```) were being created for individual elements of the story details widget. I removed the CSS for any children of the story details, and only kept it for the main story details element. This reduced the number of layers.
--	Added ```requestAnimationFrame``` to the ```loadStoryBatch``` function, to make sure the visuals were being painted at the correct time.
+-	Wrapped the ```loadStoryBatch``` function with a ```requestAnimationFrame```, to make sure the visuals were being painted at the correct time.
 -	re-factored the ```colorizeAndScaleStories``` function to optimize it, by separating the reading and writing into separate batches, reduced calculations, and reduced the number of stories being work on at one time (only visible items).
--	Removed the loop in onStoryData, since the element can be queried directly, without the looping.
--	Used CSS transform, instead of javascript for the story details animatation.
+-	Removed the loop in ```onStoryData```, since the element can be queried directly, without the looping.
+-	Used CSS transform, instead of javascript for the story details animation.
 
 ### Page Loading
 -   Minified CSS with ```htmlmin``` to reduce file size
@@ -42,6 +42,51 @@ You can load the website in two ways:
 
 [index.html Page Speed Insight analysis](https://developers.google.com/speed/pagespeed/insights/?url=https%3A%2F%2Fbschwarz.github.io%2Fnews-aggregator%2Fdist%2F&tab=mobile) 
 
+### Chrome DevTools Audit
+Received a performance score of 89 (good)
+
+<table>
+	 <caption align="center"><b>Optimization Summary<b></caption>
+  <tr>
+    <th>PageSpeed Mobile</th>
+    <th>PageSpeed Desktop</th>
+    <th>New Chrome Audit Performance</th>
+    <th>Old Chrome Audit Performance</th>
+  </tr>
+  <tr>
+    <td>74</td>
+    <td>86</td>
+    <td>89</td>
+    <td>62</td>
+  </tr>
+</table>
+
+<table>
+	 <caption align="center"><b>Optimization Summary<b></caption>
+  <tr>
+    <th>Page</th>
+    <th colspan="2">Page Speed Mobile</th>
+    <th colspan="2">Page Speed Desktop</th>
+    <th colspan="2">Chrome Perf Audit</th>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Original</td>
+    <td>Optimized</td>
+    <td>Original</td>
+    <td>Optimized</td>
+    <td>Original</td>
+    <td>Optimized</td>
+  </tr>
+  <tr>
+    <td>65</td>
+    <td>74</td>
+    <td>85</td>
+    <td>86</td>
+    <td>62</td>
+    <td>89</td>
+  </tr>
+</table>
 
 -------
 ## Build Automation
@@ -68,7 +113,7 @@ Generate Distribution
 ```
 gulp main
 ```
-You can run individual tasks by replacing ```main``` with either ```html```, ```csslint``,```js``` or ```img```
+You can run individual tasks by replacing ```main``` with either ```html```, ```csslint```,```js``` or ```img```
 The resulting files for distribution will be in the ```dist/``` directory
 
 -------
